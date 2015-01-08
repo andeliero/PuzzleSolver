@@ -48,28 +48,28 @@ class StringTile implements Tile{
 	public boolean Northern(Tile til){
 		if(!(til instanceof StringTile)) return false;
 		StringTile stil=(StringTile)til;
-		if(Id.equals(stil.Nord)) return true;
+		if(Id.isEqual(stil.Nord)) return true;
 		return false;
 	}
 
 	public boolean Southern(Tile til){
 		if(!(til instanceof StringTile)) return false;
 		StringTile stil=(StringTile)til;
-		if(Id.equals(stil.Sud)) return true;
+		if(Id.isEqual(stil.Sud)) return true;
 		return false;
 	}
 
 	public boolean Western(Tile til){
 		if(!(til instanceof StringTile)) return false;
 		StringTile stil=(StringTile)til;
-		if(Id.equals(stil.Ovest)) return true;
+		if(Id.isEqual(stil.Ovest)) return true;
 		return false;
 	}
 
 	public boolean Eastern(Tile til){
 		if(!(til instanceof StringTile)) return false;
 		StringTile stil=(StringTile)til;
-		if(Id.equals(stil.Est)) return true;
+		if(Id.isEqual(stil.Est)) return true;
 		return false;
 	}
 

@@ -26,19 +26,12 @@ public class Puzzle {
 		}
 	}
 
-	private Tile searchTile(){
-		
-	}
-
 	public void sort(){
 		if(tessere.length==0 && tessere[0].length==0) return;
 		int row=tessere.length;
 		int collumn=tessere[0].length;
-		Tile[][] ntessere=new Tile[row][collumn];
 		for(last=-1; last< (row*collumn); ;){
-			if(last==-1){
-				
-			}
+			
 		}
 		
 	}
