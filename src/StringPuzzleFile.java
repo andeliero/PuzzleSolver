@@ -34,7 +34,6 @@ class StringPuzzleFile extends PuzzleFile{
 				if(arrtxt.length>=6) idOvest=arrtxt[5];
 				if(idNord.isEmpty())	++collumn;
 				if(idEst.isEmpty())	++row;
-				System.out.println(row+" "+collumn);
 				}
     		}
 		}catch(IOException e){

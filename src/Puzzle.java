@@ -26,21 +26,30 @@ public class Puzzle {
 		}
 	}
 
-	private Tile searchTile(){
-		
-	}
-
 	public void sort(){
 		if(tessere.length==0 && tessere[0].length==0) return;
 		int row=tessere.length;
 		int collumn=tessere[0].length;
-		Tile[][] ntessere=new Tile[row][collumn];
-		for(last=-1; last< (row*collumn); ;){
-			if(last==-1){
-				
-			}
-		}
 		
+		//nuovo array dove inserire i riferimenti alle tessere nella posizione corretta
+		Tile[][] ntessere=new Tile[row][collumn];
+
+		//cerco la prima tessera
+		Tile first=null;
+		int i=-1;
+		while (first==null){
+			i++;
+			Tile aux=tessere[i/collumn][i%collumn];
+			if(aux.northEmpty() && aux.westEmpty()){ ntessere=aux; }
+		}
+		System.out.println(i);
+
+		last=ntessere[0][0];
+		while(!(last.southEmpty&&last.westEmpty) ){
+			//search tile
+			//creo un metodo che gli passa un'id e ritorna il riferimento al tile
+			//nel caso abbia completato la riga ricerco il south del primo della riga
+		}
 	}
 
 	public void writeIntoFile(String path){

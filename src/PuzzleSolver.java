@@ -7,7 +7,7 @@ public class PuzzleSolver {
 		String outputFile = args[1];
 		Puzzle puzz= new Puzzle();
 		puzz.readFromFile(inputFile);
-		/*puzz.sort();*/
+		puzz.sort();
 		puzz.writeIntoFile(outputFile);
 	}
 
