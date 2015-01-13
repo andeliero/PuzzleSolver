@@ -35,20 +35,41 @@ public class Puzzle {
 		Tile[][] ntessere=new Tile[row][collumn];
 
 		//cerco la prima tessera
-		Tile first=null;
+		Tile last=null;
 		int i=-1;
-		while (first==null){
+		while (last==null){
 			i++;
 			Tile aux=tessere[i/collumn][i%collumn];
-			if(aux.northEmpty() && aux.westEmpty()){ ntessere=aux; }
+			if(aux.northEmpty() && aux.westEmpty()){ last=aux; }
 		}
 		System.out.println(i);
 
-		last=ntessere[0][0];
-		while(!(last.southEmpty&&last.westEmpty) ){
-			//search tile
-			//creo un metodo che gli passa un'id e ritorna il riferimento al tile
-			//nel caso abbia completato la riga ricerco il south del primo della riga
+		ntessere[0][0]=last;
+		int lastIndexRow=0;
+		int lastIndexCollumn=0;
+		while(!(last.southEmpty() && last.westEmpty()) ){
+			if(!last.westEmpty()){
+				for (int z=0; z<row*collumn; z++) {
+					Tile a=tessere[z/collumn][z%collumn];
+					if(last.Western(a)){
+						lastIndexCollumn++;
+						last=a;
+						ntessere[lastIndexRow][lastIndexCollumn]=a;
+					}
+				}
+			}else{
+				//nel caso abbia completato la riga ricerco il south del primo della riga
+				last=tessere[0][lastIndexRow];
+				for (int z=0; z<row*collumn; z++) {
+					Tile a=tessere[z/collumn][z%collumn];
+					if(last.Northern(a)){
+						lastIndexCollumn=0;
+						lastIndexRow++;
+						last=a;
+						ntessere[lastIndexRow][lastIndexCollumn]=a;
+					}
+				}
+			}
 		}
 	}
 
