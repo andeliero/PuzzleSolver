@@ -1,12 +1,12 @@
 #Java compiler
 JC=javac
 #Source folder
-SRC=$(PWD)/src
+SRC=src
 #Binaries folder
-BIN=$(PWD)/bin
+BIN=bin
 #Javac flags
-JF= -classpath $(BIN) -d $(BIN)
-
+JF= -g -classpath $(BIN) -d $(BIN)
+#PWD è la variabile del path corrente
 default: PuzzleSolver.class
 
 PuzzleFile.class:
@@ -21,7 +21,14 @@ Puzzle.class: Tile.class PuzzleFile.class
 PuzzleSolver.class:	Puzzle.class
 	$(JC) $(JF) $(SRC)/PuzzleSolver.java
 
-test:
-	java -cp $(BIN) PuzzleSolver $(PWD)/iofile/file_input $(PWD)/iofile/file_output
+debug: default
+	jdb -classpath $(BIN) -sourcepath $(SRC) PuzzleSolver iofile/file_input iofile/file_output
+
+test1:
+	java -cp $(BIN) PuzzleSolver iofile/file_input_giusto iofile/file_output
+
+test2:
+	java -cp $(BIN) PuzzleSolver iofile/input1.txt iofile/file_output
+
 clean:
 	rm -r $(BIN)/*

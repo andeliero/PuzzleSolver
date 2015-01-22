@@ -32,8 +32,7 @@ class StringPuzzleFile extends PuzzleFile{
 				if(arrtxt.length>=5) idSud=arrtxt[4];
 				String idOvest=new String("");
 				if(arrtxt.length>=6) idOvest=arrtxt[5];
-				if(idNord.isEmpty())	++collumn;
-				if(idEst.isEmpty())	++row;
+				size++;
 				}
     		}
 		}catch(IOException e){
@@ -42,7 +41,6 @@ class StringPuzzleFile extends PuzzleFile{
 	}
 
 	Tile getTile(int n){
-		//if(n>size()) throw Errore;
 		String line = null;
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(this));

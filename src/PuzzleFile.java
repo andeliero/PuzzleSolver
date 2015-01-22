@@ -2,8 +2,7 @@
 import java.io.*;
 
 abstract class PuzzleFile extends File{
-	protected int row=0;
-	protected int collumn=0;
+	protected int size=0;
 	
 	PuzzleFile(String file){
 		super(file);
@@ -14,15 +13,7 @@ abstract class PuzzleFile extends File{
 	abstract void writeContent(String content);
 	
 	int size(){
-		return row*collumn;
-	}
-
-	int getRow(){
-		return row;
-	}
-
-	int getCollumn(){
-		return collumn;
+		return size;
 	}
 	
 	abstract Tile getTile(int n);

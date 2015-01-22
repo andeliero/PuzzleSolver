@@ -9,7 +9,7 @@ class StringTile implements Tile{
 	private String Est;
 	private String Ovest;	
 
-	StringTile(String i, String l, String n, String s, String e, String o){
+	StringTile(String i, String l, String n, String e, String s, String o){
 		Id=i; Lbl=l; Nord=n; Sud=s; Est=e; Ovest=o;
 	}
 	
@@ -30,19 +30,19 @@ class StringTile implements Tile{
 	}
 
 	public boolean northEmpty(){
-		return Nord.isEmpty();
+		return Nord.equals("VUOTO");
 	}
 
 	public boolean southEmpty(){
-		return Sud.isEmpty();
+		return Sud.equals("VUOTO");
 	}
 
 	public boolean eastEmpty(){
-		return Est.isEmpty();
+		return Est.equals("VUOTO");
 	}
 
 	public boolean westEmpty(){
-		return Ovest.isEmpty();
+		return Ovest.equals("VUOTO");
 	}
 
 	public boolean Northern(Tile til){
@@ -74,6 +74,6 @@ class StringTile implements Tile{
 	}
 
 	public String getRawTile(){
-		return Id+"\t"+Lbl+"\t"+Nord+"\t"+Est+"\t"+Sud+"\t"+Ovest+"\n";
+		return Lbl;
 	}
 }
