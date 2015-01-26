@@ -10,8 +10,19 @@ di riordinare tutti i pezzi all'interno.
 public class Puzzle {
 
 	private Tile[] tessere=new Tile[0];
-	private int row=0;
-	private int collumn=0;
+	private int rows=0;
+	private int collumns=0;
+
+	public int getRows(){
+		return rows;
+	}
+	public int getCollumns(){
+		return collumns;
+	}
+
+	public Tile[] getTessere(){
+		return tessere;
+	}
 
 	public Puzzle(){}
 
@@ -22,59 +33,136 @@ public class Puzzle {
 		tessere=new Tile[size];
 		for(int s=0; s<size; ++s){
 			tessere[s]=inputPuzzle.getTile(s+1);
-			if(tessere[s].westEmpty()) row++;
-			if(tessere[s].northEmpty()) collumn++;
+			if(tessere[s].westEmpty()) rows++;
+			if(tessere[s].northEmpty()) collumns++;
 		}
 	}
 
-	public void sort(){
-		class TileScout{
-			Tile findEastTile(Tile[] mtrx, Tile foo){
-				for (int i=0; i<mtrx.length; i++) {
-					if(foo.Western(mtrx[i])){
-						return mtrx[i];
+	class RowTileScout extends Thread{
+		private Puzzle puzz;
+		private Tile[] ntessere;
+		private int row=-1;//a seconda del numero cambia il comportamento
+
+		RowTileScout(Puzzle p, Tile[] dest, int r){
+			puzz=p;
+			ntessere=dest;
+			row=r;
+		}
+
+		private Tile findEastTile(Tile a){
+			Tile[] tessere=puzz.getTessere();
+			for (int i=0; i<tessere.length; i++) {
+				if(tessere[i].Eastern(a)){
+					return tessere[i];
+				}
+			}
+			return null;
+		}
+
+		public void run(){
+			Tile[] tessere=puzz.getTessere();
+			int ncol=puzz.getCollumns();
+			int nrow=puzz.getRows();
+			if(row==0){
+				Thread[] trd= new Thread[ncol-1];
+				for (int i=1; i<ncol; i++) {
+					ntessere[i]=findEastTile(ntessere[i-1]);
+					CollumnTileScout csc= new CollumnTileScout(puzz,ntessere,i);
+					csc.start();
+					trd[i-1]=csc;
+				}
+				for (int i=0; i<trd.length; i++) {
+					try{
+						trd[i].join();
+					}catch(InterruptedException e){
+						System.err.println(e);
 					}
 				}
-				return null;
-			}
-
-			Tile findSouthTile(Tile[] mtrx, Tile foo){
-				for (int i=0; i<mtrx.length; i++) {
-					if(foo.Northern(mtrx[i])){
-						return mtrx[i];
+			}else{
+				for (int i=1; i<ncol; i++) {
+					if(ntessere[row*ncol+i]!=null){
+						ntessere[row*ncol+i]=findEastTile(ntessere[row*ncol+i-1]);
 					}
 				}
-				return null;
-			}
-
-			Tile findFirstTile(Tile[] mtrx){
-				for (int i=0; i<mtrx.length; i++) {
-					Tile a=mtrx[i];
-					if(a.northEmpty() && a.westEmpty()) {return a;}
-				}
-				return null;
 			}
 		}
+	}
+
+	class CollumnTileScout extends Thread{
+		private Puzzle puzz;
+		private Tile[] ntessere;
+		private int collumn=-1;//a seconda del numero cambia il comportamento
+
+		CollumnTileScout(Puzzle p, Tile[] dest, int c){
+			puzz=p;
+			ntessere=dest;
+			collumn=c;
+		}
+
+		private Tile findSouthTile(Tile a){//index indica la riga in cui cercare
+			Tile[] tessere=puzz.getTessere();
+			for (int i=0; i<tessere.length; i++) {
+				if(tessere[i].Southern(a)){
+					return tessere[i];
+				}
+			}
+			return null;
+		}
+
+		public void run(){
+			Tile[] tessere=puzz.getTessere();
+			int ncol=puzz.getCollumns();
+			int nrow=puzz.getRows();
+			if(collumn==0){//la prima colonna procede a cercare le tessere a sud e lancia i thread che fanno la ricerca nelle righe corrispondenti
+				Thread[] trd= new Thread[nrow-1];
+				for (int i=1; i<nrow; i++) {
+					ntessere[i*ncol]=findSouthTile(ntessere[(i-1)*ncol]);
+					RowTileScout rsc=new RowTileScout(puzz,ntessere,i);
+					rsc.start();
+					trd[i-1]=rsc;
+				}
+				for (int i=0; i<trd.length; i++) {
+					try{
+						trd[i].join();
+					}catch(InterruptedException e){
+						System.err.println(e);
+					}
+				}
+			}else{//sono un thread lanciato dalla ricerca nella prima riga e cerco le tessere nelle colonne
+				for (int i=1; i<nrow; i++) {
+					if(tessere[collumn+i*ncol]!=null){
+						ntessere[collumn+i*ncol]=findSouthTile(ntessere[collumn+(i-1)*ncol]);
+					}
+				}
+			}
+		
+		}
+	}
+
+	Tile findFirstTile(){
+		for (int i=0; i<tessere.length; i++) {
+			Tile a=tessere[i];
+			if(a.northEmpty() && a.westEmpty()) {return a;}
+		}
+		return null;
+	}
+
+	public void sort(){
 		if(tessere.length==0) return;
 		//nuovo array dove inserire i riferimenti alle tessere nella posizione corretta
-		Tile[] ntessere=new Tile[tessere.length];
-		TileScout scout=new TileScout();
-		for (int d=0; d<row*collumn; d++){
-			int lastIndexCollumn=d%collumn;
-			int lastIndexRow=d/(row-1);
-			//cerco la tessere a est di ntessere[lastIndexCollumn], e quando ho terminayto la riga
-			//cerco la tessere a sud di ntessere[lastIndexRow][0]
-			if(d==0){
-				//cerco la prima tessera da posizionare in ntessere[0]
-				ntessere[d]=scout.findFirstTile(tessere);
-			} else if(lastIndexCollumn==0){
-				//cerco l'elemento più a sud
-				ntessere[d] = scout.findSouthTile(tessere,ntessere[d-collumn]);
-			}else{
-				//creco l'elemento più e est
-				ntessere[d] = scout.findEastTile(tessere,ntessere[d-1]);
-			}
+		Tile[] ntessere = new Tile[tessere.length];
+		RowTileScout rscout = new RowTileScout(this,ntessere,0);//cambiare i parametri
+		CollumnTileScout cscout = new CollumnTileScout(this,ntessere,0);//cambare i parametri
+		ntessere[0]=findFirstTile();
+		rscout.start();
+		cscout.start();
+		try{
+			rscout.join();
+			cscout.join();
+		}catch(InterruptedException e){
+			System.err.println(e);
 		}
+		//non posso ritornare finchè l'ordinamento non è terminato, uso la join thread
 		tessere=ntessere;
 		return;
 	}
@@ -90,7 +178,7 @@ public class Puzzle {
 			out=out+tessere[a].getRawTile();
 			if(tessere[a].eastEmpty()) out=out+"\n";
 		}
-		out=out+"\n"+row+" "+collumn;
+		out=out+"\n"+rows+" "+collumns;
 		outputPuzzle.writeContent(out);
     }
 }
