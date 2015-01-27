@@ -80,7 +80,7 @@ public class Puzzle {
 				}
 			}else{
 				for (int i=1; i<ncol; i++) {
-					if(ntessere[row*ncol+i]!=null){
+					if(ntessere[row*ncol+i]==null){
 						ntessere[row*ncol+i]=findEastTile(ntessere[row*ncol+i-1]);
 					}
 				}
@@ -130,7 +130,7 @@ public class Puzzle {
 				}
 			}else{//sono un thread lanciato dalla ricerca nella prima riga e cerco le tessere nelle colonne
 				for (int i=1; i<nrow; i++) {
-					if(tessere[collumn+i*ncol]!=null){
+					if(tessere[collumn+i*ncol]==null){
 						ntessere[collumn+i*ncol]=findSouthTile(ntessere[collumn+(i-1)*ncol]);
 					}
 				}
@@ -172,6 +172,7 @@ public class Puzzle {
 		String out="";
 		for(int a=0; a<tessere.length; a++){
 			out=out+tessere[a].getRawTile();
+			//System.out.println(tessere[a]);
 		}
 		out=out+"\n\n";
 		for(int a=0; a<tessere.length; a++){
