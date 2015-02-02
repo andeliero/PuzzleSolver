@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 
 enum TileType{
 	STRING

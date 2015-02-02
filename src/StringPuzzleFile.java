@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 import java.io.*;
 
 class StringPuzzleFile extends PuzzleFile{
@@ -18,21 +18,7 @@ class StringPuzzleFile extends PuzzleFile{
 			String line = null;
 			while((line = reader.readLine()) != null){
 				if(!line.isEmpty()){
-    			String[] arrtxt=line.split("\t");//essendo separati da un carattere di tabulazione
-				//potrei fare un controllo + ferreo sui tasselli
-				//if(arrtxt.length!=6) throw File non compatibile;
-				//[0]id_pezzo [1]carattere [2]id_nord [3]id_est [4]id_sud [5]id_ovest
-				String idPezzo=new String("");
-				String carattere=new String("");
-				String idNord=new String("");
-				if(arrtxt.length>=3) idNord=arrtxt[2];
-				String idEst=new String("");
-				if(arrtxt.length>=4) idEst=arrtxt[3];
-				String idSud=new String("");
-				if(arrtxt.length>=5) idSud=arrtxt[4];
-				String idOvest=new String("");
-				if(arrtxt.length>=6) idOvest=arrtxt[5];
-				size++;
+    				size++;
 				}
     		}
 		}catch(IOException e){
@@ -53,18 +39,12 @@ class StringPuzzleFile extends PuzzleFile{
 			System.err.println(e);
 		}
 		String[] arrtxt = line.split("\t");
-		String idPezzo=new String("");
-		idPezzo=arrtxt[0];
-		String carattere=new String("");
-		carattere=arrtxt[1];
-		String idNord=new String("");
-		if(arrtxt.length>=3) idNord=arrtxt[2];
-		String idEst=new String("");
-		if(arrtxt.length>=4) idEst=arrtxt[3];
-		String idSud=new String("");
-		if(arrtxt.length>=5) idSud=arrtxt[4];
-		String idOvest=new String("");
-		if(arrtxt.length>=6) idOvest=arrtxt[5];
+		String idPezzo=arrtxt[0];
+		String carattere=arrtxt[1];
+		String idNord=arrtxt[2];
+		String idEst=arrtxt[3];
+		String idSud=arrtxt[4];
+		String idOvest=arrtxt[5];
 		String[] arrtil= {idPezzo,carattere,idNord,idEst,idSud,idOvest};
 		Tile foo=TileFactory.getTile(TileType.STRING,arrtil);
 		return foo;

@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 /*rappresentazione generica di una tessera del puzzle*/
 
 class StringTile implements Tile{

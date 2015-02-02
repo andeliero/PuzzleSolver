@@ -1,4 +1,4 @@
-//import puzzsol.Puzzle;
+import puzzsol.Puzzle;
 
 public class PuzzleSolver {
 

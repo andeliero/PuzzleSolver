@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 
 class TileFactory{
 

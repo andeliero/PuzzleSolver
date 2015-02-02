@@ -25,10 +25,10 @@ debug: default
 	jdb -classpath $(BIN) -sourcepath $(SRC) PuzzleSolver iofile/file_input iofile/file_output
 
 test1:
-	java -cp $(BIN) PuzzleSolver iofile/file_input_giusto iofile/file_output
+	java -cp $(BIN) PuzzleSolver iofile/file_input1 iofile/file_output
 
 test2:
-	java -cp $(BIN) PuzzleSolver iofile/input1.txt iofile/file_output
+	java -cp $(BIN) PuzzleSolver iofile/file_input2 iofile/file_output
 
 clean:
 	rm -r $(BIN)/*

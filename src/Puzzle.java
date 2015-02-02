@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 
 /* 
 rappresentazione ad oggetti dell'intero insieme di tessere del puzzle.

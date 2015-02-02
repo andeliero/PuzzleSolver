@@ -1,5 +1,5 @@
-//package puzzsol;
-/*rappresentazione generica di una tessera di un puzzle */
+package puzzsol;
+/*rappresentazione generica di una tessera di un puzzle rettangolare*/
 
 interface Tile{
 	Object north();
@@ -14,6 +14,5 @@ interface Tile{
 	boolean Southern(Tile til);
 	boolean Western(Tile til);
 	boolean Eastern(Tile til);
-	String getRawTile();
-	//implementare qui le op di confrtonto
+	String getRawTile();//restituisce la stringa della tessera
 }
