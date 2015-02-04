@@ -16,7 +16,7 @@ Tile.class:
 	$(JC) $(JF) $(SRC)/Tile.java $(SRC)/StringTile.java $(SRC)/TileFactory.java $(SRC)/TileType.java
 
 Puzzle.class: Tile.class PuzzleFile.class
-	$(JC) $(JF) $(SRC)/Puzzle.java
+	$(JC) $(JF) $(SRC)/Puzzle.java $(SRC)/PuzzleInterface.java $(SRC)/PuzzleFactory.java $(SRC)/PuzzleType.java
 
 PuzzleSolver.class:	Puzzle.class
 	$(JC) $(JF) $(SRC)/PuzzleSolver.java

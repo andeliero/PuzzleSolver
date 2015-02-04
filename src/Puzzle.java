@@ -1,17 +1,18 @@
 package puzzsol;
 
 /* 
-rappresentazione ad oggetti dell'intero insieme di tessere del puzzle.
-All'inizio è non ordinato poi con un metodo ordina() che permette 
+implementazione ad oggetti dell'intero insieme di tessere del puzzle.
+All'inizio è non ordinato poi con un metodo sort() che permette 
 di riordinare tutti i pezzi all'interno.
+La classe TileScout mette a disposizione dei metodi utili per il riordino delle tessere.
 */
 
 
-public class Puzzle {
+class Puzzle implements PuzzleInterface {
 
-	private Tile[] tessere=new Tile[0];
-	private int row=0;
-	private int collumn=0;
+	private Tile[] tessere=new Tile[0];//le tessere sono ordinate per riga
+	private int rows=0;
+	private int collumns=0;
 
 	public Puzzle(){}
 
@@ -22,55 +23,53 @@ public class Puzzle {
 		tessere=new Tile[size];
 		for(int s=0; s<size; ++s){
 			tessere[s]=inputPuzzle.getTile(s+1);
-			if(tessere[s].westEmpty()) row++;
-			if(tessere[s].northEmpty()) collumn++;
+			if(tessere[s].westEmpty()) rows++;
+			if(tessere[s].northEmpty()) collumns++;
+		}
+	}
+
+	class TileScout{
+		Tile findEastTile(Tile[] mtrx, Tile foo){
+			for (int i=0; i<mtrx.length; i++) {
+				if(foo.Western(mtrx[i])){
+					return mtrx[i];
+				}
+			}
+			return null;
+		}
+
+		Tile findSouthTile(Tile[] mtrx, Tile foo){
+			for (int i=0; i<mtrx.length; i++) {
+				if(foo.Northern(mtrx[i])){
+					return mtrx[i];
+				}
+			}
+			return null;
+		}
+
+		Tile findFirstTile(Tile[] mtrx){
+			for (int i=0; i<mtrx.length; i++) {
+				Tile a=mtrx[i];
+				if(a.northEmpty() && a.westEmpty()) {return a;}
+			}
+			return null;
 		}
 	}
 
 	public void sort(){
-		class TileScout{
-			Tile findEastTile(Tile[] mtrx, Tile foo){
-				for (int i=0; i<mtrx.length; i++) {
-					if(foo.Western(mtrx[i])){
-						return mtrx[i];
-					}
-				}
-				return null;
-			}
-
-			Tile findSouthTile(Tile[] mtrx, Tile foo){
-				for (int i=0; i<mtrx.length; i++) {
-					if(foo.Northern(mtrx[i])){
-						return mtrx[i];
-					}
-				}
-				return null;
-			}
-
-			Tile findFirstTile(Tile[] mtrx){
-				for (int i=0; i<mtrx.length; i++) {
-					Tile a=mtrx[i];
-					if(a.northEmpty() && a.westEmpty()) {return a;}
-				}
-				return null;
-			}
-		}
 		if(tessere.length==0) return;
-		//nuovo array dove inserire i riferimenti alle tessere nella posizione corretta
-		Tile[] ntessere=new Tile[tessere.length];
+		Tile[] ntessere=new Tile[tessere.length];//nuovo array dove inserire i riferimenti alle tessere nella posizione corretta
 		TileScout scout=new TileScout();
-		for (int d=0; d<row*collumn; d++){
-			int lastIndexCollumn=d%collumn;
-			int lastIndexRow=d/(row-1);
-			//cerco la tessere a est di ntessere[lastIndexCollumn], e quando ho terminayto la riga
-			//cerco la tessere a sud di ntessere[lastIndexRow][0]
-			if(d==0){
+		for (int d=0; d<rows*collumns; d++){
+			int lastIndexCollumn=d%collumns;
+			int lastIndexRow=d/(rows-1);
+			if(d==0){//per il primo tassello non ho riferimenti quindi
 				//cerco la prima tessera da posizionare in ntessere[0]
 				ntessere[d]=scout.findFirstTile(tessere);
-			} else if(lastIndexCollumn==0){
+			} else if(lastIndexCollumn==0){//quando ho terminato la riga corrente
 				//cerco l'elemento più a sud
-				ntessere[d] = scout.findSouthTile(tessere,ntessere[d-collumn]);
-			}else{
+				ntessere[d] = scout.findSouthTile(tessere,ntessere[d-collumns]);
+			}else{//altrimenti
 				//creco l'elemento più e est
 				ntessere[d] = scout.findEastTile(tessere,ntessere[d-1]);
 			}
@@ -90,7 +89,7 @@ public class Puzzle {
 			out=out+tessere[a].getRawTile();
 			if(tessere[a].eastEmpty()) out=out+"\n";
 		}
-		out=out+"\n"+row+" "+collumn;
+		out=out+"\n"+rows+" "+collumns;
 		outputPuzzle.writeContent(out);
     }
 }

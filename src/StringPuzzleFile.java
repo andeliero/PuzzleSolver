@@ -3,16 +3,12 @@ import java.io.*;
 
 class StringPuzzleFile extends PuzzleFile{
 
-	
-	//definire un'eccezione per incompatibilità di file
 	public StringPuzzleFile(String file){
 		super(file);
 	}
 
 	void parse(){
-		//controllo il contenuto del file che sia nel 
-		//formato corretto per un puzzle rettangolare
-		//quindi so a priori com'è costituito un tassello
+		//controllo la dimensione del puzzle
 		try{
 			BufferedReader reader = new BufferedReader(new FileReader(this));
 			String line = null;
