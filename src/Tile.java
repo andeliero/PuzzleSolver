@@ -1,19 +1,69 @@
-//package puzzsol;
-/*rappresentazione generica di una tessera di un puzzle */
+package puzzsol;
+/*rappresentazione generica di una tessera di un puzzle rettangolare*/
 
-interface Tile{
-	Object north();
-	Object south();
-	Object east();
-	Object west();
-	boolean northEmpty();
-	boolean southEmpty();
-	boolean eastEmpty();
-	boolean westEmpty();
-	boolean Northern(Tile til);
-	boolean Southern(Tile til);
-	boolean Western(Tile til);
-	boolean Eastern(Tile til);
-	String getRawTile();
-	//implementare qui le op di confrtonto
+abstract class Tile{
+
+	private String Id;
+	private String Nord;
+	private String Sud;
+	private String Est;
+	private String Ovest;	
+
+	Tile(String i, String n, String e, String s, String o){
+		Id=i; Nord=n; Est=e; Sud=s; Ovest=o;
+	}
+
+	public String north(){
+		return Nord;
+	}
+
+	public String south(){
+		return Sud;
+	}
+
+	public String east(){
+		return Est;
+	}
+
+	public String west(){
+		return Ovest;
+	}
+
+	public boolean northEmpty(){
+		return Nord.equals("VUOTO");
+	}
+
+	public boolean southEmpty(){
+		return Sud.equals("VUOTO");
+	}
+
+	public boolean eastEmpty(){
+		return Est.equals("VUOTO");
+	}
+
+	public boolean westEmpty(){
+		return Ovest.equals("VUOTO");
+	}
+
+	public boolean Northern(Tile til){
+		if(Id.equals(til.Nord)) return true;
+		return false;
+	}
+
+	public boolean Southern(Tile til){
+		if(Id.equals(til.Sud)) return true;
+		return false;
+	}
+
+	public boolean Western(Tile til){
+		if(Id.equals(til.Ovest)) return true;
+		return false;
+	}
+
+	public boolean Eastern(Tile til){
+		if(Id.equals(til.Est)) return true;
+		return false;
+	}
+
+	abstract String getRawTile();//restituisce la stringa della tessera
 }

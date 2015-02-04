@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 import java.io.*;
 
 class PuzzleFileFactory{

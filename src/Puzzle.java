@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 
 /* 
 rappresentazione ad oggetti dell'intero insieme di tessere del puzzle.
@@ -7,7 +7,7 @@ di riordinare tutti i pezzi all'interno.
 */
 
 
-public class Puzzle {
+public class Puzzle implements PuzzleInterface {
 
 	private Tile[] tessere=new Tile[0];
 	private int rows=0;

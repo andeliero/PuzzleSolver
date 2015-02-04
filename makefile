@@ -16,7 +16,7 @@ Tile.class:
 	$(JC) $(JF) $(SRC)/Tile.java $(SRC)/StringTile.java $(SRC)/TileFactory.java $(SRC)/TileType.java
 
 Puzzle.class: Tile.class PuzzleFile.class
-	$(JC) $(JF) $(SRC)/Puzzle.java
+	$(JC) $(JF) $(SRC)/Puzzle.java $(SRC)/PuzzleInterface.java $(SRC)/PuzzleFactory.java $(SRC)/PuzzleType.java
 
 PuzzleSolver.class:	Puzzle.class
 	$(JC) $(JF) $(SRC)/PuzzleSolver.java
@@ -25,10 +25,10 @@ debug: default
 	jdb -classpath $(BIN) -sourcepath $(SRC) PuzzleSolver iofile/file_input iofile/file_output
 
 test1:
-	java -cp $(BIN) PuzzleSolver iofile/file_input_giusto iofile/file_output
+	java -cp $(BIN) PuzzleSolver iofile/file_input1 iofile/file_output
 
 test2:
-	java -cp $(BIN) PuzzleSolver iofile/input1.txt iofile/file_output
+	java -cp $(BIN) PuzzleSolver iofile/file_input2 iofile/file_output
 
 clean:
 	rm -r $(BIN)/*
