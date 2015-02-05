@@ -1,0 +1,24 @@
+\documentclass[a4paper]{article}
+
+\usepackage{graphicx}
+
+\title{Risolutore di puzzle – Parte 2}
+\author{Alberto Andeliero}
+\date{10 febbraio 2015}
+\begin{document}
+\maketitle
+\centerline{Programmazione concorrente e distribuita}
+\centerline{Progetto A.A. 2014/2015}
+
+\section{Descrizione generale dell'Algoritmo concorrente}
+L'algoritmo di risoluzione del puzzle risiede tutto nel metodo Puzzle.sort(), come precondizione abbiamo un array di Tile non ordinato mentre in postcondizione abbiamo un array di Tile ordinato per righe. Il metodo si appoggia a due classi interne che rappresentano due classi thread con differenti compiti, la prima è RowTileScout che è responsabile di scovare tutti i riferimenti della riga assegnatagli, mentre la seconda che è CollumnTileScout, è responsabile di trovare i riferimenti della colonna assegnatagli. Se a queste classi gli vengono assegnati la prima riga o colonna continuano nella loro funzione con l'aggiunta che fanno partire un thread per ogni tassello scoperto, in particolare nel caso di RowTileScout farà partire un thread CollumnTileScout per ogni Tile che trova mentre CollumnTileScout farà partire un thread RowTileScout per ogni istanza Tile trovata nella sua colonna. Il metodo Puzzle.sort() è responsabile di trovare il primo tassello del puzzle per poi instaziare i primi 2 thread, un CollumnTileScout ed un RowTileScout per la prima colonna e per la prima riga.
+
+\section{Aspetti della concorrenza}
+In questo algoritmo non sono emersi problemi di concorrenza da trattare con sincronizzazioni attese o notifiche. Poteva sorgere un problema al momento del test per verificare se è stato già trovato o no la tessera prima di fare una ricerca, ma non è un problema grave poichè se due tread testano concorrentemente la stessa cella di memoria entrambi procederanno alla ricerca del tassello che sarà lo stesso.
+
+\section{Correttezza}
+
+\section{Cambiamenti} 
+
+
+\end{document}
