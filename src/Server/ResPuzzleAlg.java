@@ -1,3 +1,4 @@
+package puzzsol;
 import java.rmi.*;
 
 public interface ResPuzzleAlg extends Remote{

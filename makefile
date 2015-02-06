@@ -28,7 +28,7 @@ CTile.class:
 	$(JC) $(CJF) $(CSRC)/Tile.java $(CSRC)/StringTile.java $(CSRC)/TileFactory.java $(CSRC)/TileType.java
 
 CPuzzle.class: CTile.class CPuzzleFile.class CResPuzzleAlg.class
-	$(JC) $(CJF) $(CSRC)/Puzzle.java
+	$(JC) $(CJF) $(CSRC)/Puzzle.java $(CSRC)/PuzzleInterface.java $(CSRC)/PuzzleFactory.java $(CSRC)/PuzzleType.java
 
 PuzzleSolverClient.class:	CPuzzle.class
 	$(JC) $(CJF) $(CSRC)/PuzzleSolverClient.java
@@ -49,14 +49,17 @@ PuzzleSolverServer.class: ResPuzzleAlg.class
 Server: PuzzleSolverServer.class
 
 #other 
-debug: default
-	jdb -classpath $(BIN) -sourcepath $(SRC) PuzzleSolver iofile/file_input iofile/file_output
+#debug: default
+#	jdb -classpath $(BIN) -sourcepath $(SRC) PuzzleSolver iofile/file_input iofile/file_output
 
-test1:
-	java -cp $(BIN) PuzzleSolver iofile/file_input_giusto iofile/file_output
+startServer:
+	rmiregistry -J-Dclasspath=$(SBIN) & java -cp $(SBIN) PuzzleSolverServer localhost &
+
+test1: startServer
+	java -cp $(CBIN) PuzzleSolverClient iofile/file_input1 iofile/file_output localhost
 
 test2:
-	java -cp $(BIN) PuzzleSolver iofile/input1.txt iofile/file_output
+	java -cp $(CBIN) PuzzleSolverClient iofile/file_input2 iofile/file_output localhost
 
 clean:
-	rm -r $(SBIN)/*
+	rm -r $(SBIN)/* $(CBIN)/*

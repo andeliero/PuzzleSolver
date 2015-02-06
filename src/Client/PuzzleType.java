@@ -1,5 +1,5 @@
 package puzzsol;
 
-public enum TileType{
+public enum PuzzleType{
 	STRING
 }

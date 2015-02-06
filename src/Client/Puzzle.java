@@ -1,4 +1,4 @@
-//package puzzsol;
+package puzzsol;
 
 /* 
 rappresentazione ad oggetti dell'intero insieme di tessere del puzzle.
@@ -9,7 +9,7 @@ di riordinare tutti i pezzi all'interno.
 import java.rmi.*;
 
 
-public class Puzzle {
+public class Puzzle implements PuzzleInterface {
 
 	private Tile[] tessere=new Tile[0];
 	private int rows=0;
@@ -30,8 +30,17 @@ public class Puzzle {
 	}
 
 	
-	public void sort(ResPuzzleAlg rpa) throws RemoteException {
-		tessere = rpa.sort(tessere,rows,collumns);
+	public void sort(String host) {
+		try{
+			ResPuzzleAlg rpa = (ResPuzzleAlg)Naming.lookup("rmi://"+host+"/Resolutor");
+			tessere = rpa.sort(tessere,rows,collumns);
+		}
+		catch(ConnectException e){
+			System.out.println("problemi di connesione al server");
+		}
+		catch(Exception exc){
+			exc.printStackTrace();
+		}
 		return;
 	}
 
